@@ -1,6 +1,6 @@
 import wandb
 import torch
-from evaluate import evaluate_model
+from src.evaluate import evaluate_model
 
 
 
