@@ -17,6 +17,7 @@ model:
     - activation: "relu" 
     - linear: [128, 1] #we predict a single value because we have a regression task
   task: "regression"
+  use_sincos_encoding: false
 
 
 training:
