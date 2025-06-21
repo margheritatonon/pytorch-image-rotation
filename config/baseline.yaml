@@ -6,7 +6,7 @@ model:
   type: "custom"
   layers:
     - flatten: true
-    - linear: [512, 256]
+    - linear: [1568, 256]
     - activation: "relu"
     - linear: [256, 128]
     - activation: "relu"
