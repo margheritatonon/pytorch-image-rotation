@@ -6,10 +6,12 @@ model:
     - activation: "relu"
     - linear: [256, 128]
     - activation: "relu"
-    - linear: [128, 360] #because 360 classes since we predict the angle in degrees
+    - linear: [128, 1] #we predict a single value because we have a regression task
 
 
 training:
   epochs: 10
-  batch_size: 32
+  batch_size: 64
   learning_rate: 0.001
+  loss: "mean_squared_error"
+  optimizer: "adam"
