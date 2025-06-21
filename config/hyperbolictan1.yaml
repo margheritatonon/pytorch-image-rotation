@@ -1,0 +1,22 @@
+experiment_name: "hyperbolictan1"
+project_name : "baseline_linear_relu_regression"
+
+model:
+  name: "hyperbolictan1_model"
+  type: "custom"
+  layers:
+    - flatten: true
+    - linear: [1568, 256]
+    - activation: "tanh"
+    - linear: [256, 128]
+    - activation: "tanh"
+    - linear: [128, 1] #we predict a single value because we have a regression task
+  task: "regression"
+
+
+training:
+  num_epochs: 10
+  batch_size: 64
+  learning_rate: 0.001
+  loss: "mse"
+  optimizer: "adam"
