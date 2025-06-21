@@ -10,7 +10,9 @@ def build_custom_model(config):
     """
     layers = []
     for layer in config["model"]["layers"]: #looping through the layers in the config
-        if "linear" in layer: #if the layer is a linear layer:
+        if "flatten" in layer and layer["flatten"] == True:
+            layers.append(nn.Flatten())
+        elif "linear" in layer: #if the layer is a linear layer:
             in_dim, out_dim = layer["linear"] #taking the dimensions of the layer
             layers.append(nn.Linear(in_dim, out_dim))
         elif "activation" in layer:
