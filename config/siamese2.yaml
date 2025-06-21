@@ -1,0 +1,27 @@
+#creating a siamese neural network for image similarity
+
+experiment_name: "siamese_mlp_tanh"
+project_name : "baseline_linear_relu_regression"
+
+model:
+  name: "siamese_model_withhyperbolictan"
+  type: "siamese"
+  embedding_layers:
+    - flatten: true
+    - linear: [784, 256]
+    - activation: "tanh"
+    - linear: [256, 128]
+    - activation: "tanh"
+  comparison_layers:
+    - linear: [256, 128]
+    - activation: "tanh" 
+    - linear: [128, 1] #we predict a single value because we have a regression task
+  task: "regression"
+
+
+training:
+  num_epochs: 10
+  batch_size: 64
+  learning_rate: 0.001
+  loss: "mse"
+  optimizer: "adam"
