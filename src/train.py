@@ -46,6 +46,7 @@ def train_model(model, train_loader, val_loader, config):
 
     #training loop
     for epoch in range(num_epochs):
+        print(f"Starting epoch {epoch+1}/{num_epochs}")
         model.train() #setting the model to training mode
         total_loss = 0.0
         for batch_index, (original_imgs, rotated_imgs, angle) in enumerate(train_loader): 
@@ -67,15 +68,19 @@ def train_model(model, train_loader, val_loader, config):
             optimizer.step()
             total_loss = total_loss + loss_value
 
-            validation_accuracy = evaluate_model(config, model, val_loader) #evaluating the model on the validation set - dependency on evaluate.py
 
             #logging in wandb
             wandb.log({
                 "train_loss": loss_value.item(),
-                "epoch": epoch,
-                "validation_accuracy": validation_accuracy
+                "epoch": epoch
             })
+        validation_accuracy = evaluate_model(config, model, val_loader) #evaluating the model on the validation set - dependency on evaluate.py
         avg_loss = total_loss / len(train_loader)
+        wandb.log({
+            "validation_accuracy": validation_accuracy,
+            "epoch": epoch,
+            "avg_loss": avg_loss.item()
+        })
         print(f"Epoch [{epoch+1}/{num_epochs}], Loss: {avg_loss.item():.4f}")
 
     return model #returning the trained model
