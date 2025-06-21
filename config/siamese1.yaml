@@ -8,7 +8,7 @@ model:
   type: "siamese"
   embedding_layers:
     - flatten: true
-    - linear: [1568, 256]
+    - linear: [784, 256]
     - activation: "relu"
     - linear: [256, 128]
     - activation: "relu"
