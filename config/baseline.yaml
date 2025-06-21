@@ -7,6 +7,7 @@ model:
     - linear: [256, 128]
     - activation: "relu"
     - linear: [128, 1] #we predict a single value because we have a regression task
+  task: "regression"
 
 
 training:
