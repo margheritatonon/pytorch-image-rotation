@@ -29,9 +29,9 @@ def train_model(model, train_loader, val_loader, config):
 
     #loss function:
     lossconfig = config["training"]["loss"]
-    if lossconfig["type"] == "mse":
+    if lossconfig == "mse":
         loss = torch.nn.MSELoss()
-    elif lossconfig["type"] == "l1":
+    elif lossconfig == "l1":
         loss = torch.nn.L1Loss()
     #add more loss functions here if needed
 
