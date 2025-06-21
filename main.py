@@ -34,13 +34,13 @@ def main():
 
     #starting the process:
     #loaders
-    train_loader, val_loader, test_loader = get_dataloaders() #you can make this dependent on config and add more parameters to the .yaml file if needed
+    train_loader, test_loader = get_dataloaders() #you can make this dependent on config and add more parameters to the .yaml file if needed
     #accessing the model
     model = get_model(config)
     #training the model
-    trained_model = train_model(model, train_loader, val_loader, config)
+    trained_model = train_model(model, train_loader, test_loader, config)
     #evaluating the model
-    results = evaluate_model(trained_model, val_loader, config)
+    results = evaluate_model(trained_model, test_loader, config)
     #saving the model and results
 
 if __name__ == "__main__":
