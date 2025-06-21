@@ -50,8 +50,8 @@ def build_siamese_model(config):
     Function to get the Siamese model for image rotation prediction.
     Used in main.py
     """
-    embedding_net = build_custom_model(config["model"]["embedding_layers"])
-    comparison_net = build_custom_model(config["model"]["comparison_layers"])
+    embedding_net = build_custom_model({"model": {"layers": config["model"]["embedding_layers"]}})
+    comparison_net = build_custom_model({"model": {"layers": config["model"]["comparison_layers"]}})
     return SiameseModel(embedding_net, comparison_net)
 
 def get_model(config):
