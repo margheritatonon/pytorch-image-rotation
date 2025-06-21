@@ -5,7 +5,7 @@ from torch.utils.data import random_split
 
 #we wrap the dataset in a class
 class LoadedRotatedData(Dataset):
-    def __init__(self, path="rotated_images/rotated_dataset.pt"):
+    def __init__(self, path="dataset/copy_rotated_dataset.pt"):
         original_images, rotated_images, angles = torch.load(path)
         self.original_images = original_images
         self.rotated_images = rotated_images
