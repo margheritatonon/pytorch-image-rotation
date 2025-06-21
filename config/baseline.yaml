@@ -18,5 +18,5 @@ training:
   num_epochs: 10
   batch_size: 64
   learning_rate: 0.001
-  loss: "mean_squared_error"
+  loss: "mse"
   optimizer: "adam"
