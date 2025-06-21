@@ -56,8 +56,12 @@ def train_model(model, train_loader, val_loader, config):
             rotated_imgs = rotated_imgs.to(device).float()
             angle = angle.to(device).float()
 
-            inputs = torch.cat((original_imgs, rotated_imgs), dim=1)  # channel-wise
-            predictions = model(inputs)
+            if config["model"]["type"] == "siamese":
+                inputs = (original_imgs, rotated_imgs)  # for Siamese model
+            else:
+                inputs = torch.cat((original_imgs, rotated_imgs), dim=1)  # channel-wise
+
+            predictions = model(*inputs) #unpacking with *
             #predictions = model(original_imgs, rotated_imgs) #using the model to get predictions based on original and rotated images
             loss_value = loss(predictions.squeeze(), angle) #calculating the loss between prediction and actual angle
 
