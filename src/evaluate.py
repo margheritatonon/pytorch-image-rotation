@@ -54,11 +54,13 @@ def evaluate_model(config, model, test_loader):
             "median_absolute_error": median_absolute_error,
             "time_taken": time_taken
         })
+        return mean_squared_error #we only return the MSE here
     else: #classification
         accuracy = np.mean(all_predictions == all_actuals)
         wandb.log({
             "accuracy": accuracy,
             "time_taken": time_taken
         })
+        return accuracy
 
      
