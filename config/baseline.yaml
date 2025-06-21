@@ -5,6 +5,7 @@ model:
   name: "baseline_model"
   type: "custom"
   layers:
+    - flatten: true
     - linear: [512, 256]
     - activation: "relu"
     - linear: [256, 128]
