@@ -76,5 +76,7 @@ def train_model(model, train_loader, val_loader, config):
         avg_loss = total_loss / len(train_loader)
         print(f"Epoch [{epoch+1}/{num_epochs}], Loss: {avg_loss.item():.4f}")
 
+    return model #returning the trained model
+
 
 
