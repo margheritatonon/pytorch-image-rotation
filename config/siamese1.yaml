@@ -1,0 +1,27 @@
+#creating a siamese neural network for image similarity
+
+experiment_name: "siamese_mlp_relu"
+project_name : "baseline_linear_relu_regression"
+
+model:
+  name: "siamese_model_withrelu"
+  type: "siamese"
+  embedding_layers:
+    - flatten: true
+    - linear: [1568, 256]
+    - activation: "relu"
+    - linear: [256, 128]
+    - activation: "relu"
+  comparison_layers:
+    - linear: [256, 128]
+    - activation: "relu" 
+    - linear: [128, 1] #we predict a single value because we have a regression task
+  task: "regression"
+
+
+training:
+  num_epochs: 10
+  batch_size: 64
+  learning_rate: 0.001
+  loss: "mse"
+  optimizer: "adam"
