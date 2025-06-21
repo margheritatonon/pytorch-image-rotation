@@ -24,7 +24,8 @@ def evaluate_model(config, model, test_loader):
             rotated_ims = rotated_ims.to(device).float()
             angs = angs.to(device).float()
 
-            outputs = model(original_ims, rotated_ims) #using the model
+            inputs = torch.cat((original_ims, rotated_ims), dim=1)  # channel-wise concatenation
+            outputs = model(inputs) #using the model
 
             if not is_regression:
                 predictions = torch.argmax(outputs, dim=1)
