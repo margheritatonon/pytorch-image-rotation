@@ -1,3 +1,6 @@
+experiment_name: "baseline_mlp"
+project_name : "baseline_linear_relu_regression"
+
 model:
   name: "baseline_model"
   type: "custom"
