@@ -11,7 +11,7 @@ def train_model(model, train_loader, val_loader, config):
     Parameters:
         model: The model to be trained.
         train_loader: DataLoader for the training dataset.
-        val_loader: DataLoader for the validation dataset.
+        val_loader: DataLoader for the validation dataset. (test_loader is the same, be careful)
         config: Configuration dictionary containing training parameters.
     """
     #device setup
@@ -67,7 +67,7 @@ def train_model(model, train_loader, val_loader, config):
             optimizer.step()
             total_loss = total_loss + loss_value
 
-            validation_accuracy = evaluate_model(model, val_loader, device) #evaluating the model on the validation set - dependency on evaluate.py
+            validation_accuracy = evaluate_model(config, model, val_loader) #evaluating the model on the validation set - dependency on evaluate.py
 
             #logging in wandb
             wandb.log({
