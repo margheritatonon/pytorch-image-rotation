@@ -33,8 +33,16 @@ def evaluate_model(config, model, test_loader):
 
             if not is_regression:
                 predictions = torch.argmax(outputs, dim=1)
-            else:
-                predictions = outputs.squeeze()
+            elif is_regression:
+                if config["model"]["use_sincos_encoding"]:
+                    #we decode the sincos encoding back to angles
+                    predicted_angles = torch.atan2(predictions[:, 0], predictions[:, 1]) * (180 / np.pi)
+                    actual_angles = torch.atan2(angs[:, 0], angs[:, 1]) * (180 / np.pi)
+                    predicted_angles = predicted_angles % 360 #normalizing the angles to be between 0 and 360
+                    actual_angles = actual_angles % 360
+                else:
+                    predicted_angles = outputs.squeeze()
+                    actual_angles = angs.squeeze()
 
             all_predictions.append(predictions.squeeze().cpu().numpy())
             all_actuals.append(angs.cpu().numpy())
