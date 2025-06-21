@@ -40,7 +40,7 @@ def main():
     #training the model
     trained_model = train_model(model, train_loader, test_loader, config)
     #evaluating the model
-    results = evaluate_model(trained_model, test_loader, config)
+    results = evaluate_model(config, trained_model, test_loader)
     #saving the model and results
 
 if __name__ == "__main__":
