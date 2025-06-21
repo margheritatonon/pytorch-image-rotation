@@ -37,9 +37,9 @@ def train_model(model, train_loader, val_loader, config):
 
     #optimizer:
     optimizer_config = config["training"]["optimizer"]
-    if optimizer_config["type"] == "adam":
+    if optimizer_config == "adam":
         optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-    elif optimizer_config["type"] == "sgd":
+    elif optimizer_config == "sgd":
         momentum = config["training"]["momentum"] if "momentum" in optimizer_config else 0.9 
         optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=momentum)
     #add more optimizers here if needed
