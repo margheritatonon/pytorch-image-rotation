@@ -1,5 +1,6 @@
 import yaml
 import argparse
+import wandb
 
 from src.data import get_dataloaders
 from src.models import get_model
@@ -24,19 +25,20 @@ def main():
     with open(args.config, "r") as f:
         config = yaml.safe_load(f)
 
-    if args.log:
-        import wandb
-        wandb.init(
-            project="image-rotation-prediction",
-            config=config)
+    wandb.init(
+        project = config.get("project_name", "rotation-prediction"),
+        name=config.get("experiment_name", "baseline-run"),
+        config=config
+    )
             
 
     #starting the process:
-
-    train_loader, val_loader = get_dataloaders(config)
-    model = get_model(config['model'])
+    #loaders
+    train_loader, val_loader, test_loader = get_dataloaders() #you can make this dependent on config and add more parameters to the .yaml file if needed
+    #accessing the model
+    model = get_model(config)
     #training the model
-    trained_model, metrics = train_model(model, train_loader, val_loader, config)
+    trained_model = train_model(model, train_loader, val_loader, config)
     #evaluating the model
     results = evaluate_model(trained_model, val_loader, config)
     #saving the model and results
