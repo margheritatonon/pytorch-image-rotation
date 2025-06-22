@@ -78,8 +78,6 @@ def evaluate_model(config, model, test_loader):
                 "mean_absolute_error": mean_absolute_error,
                 "median_absolute_error": median_absolute_error,
                 "time_taken": time_taken,
-                "angle_errors": angle_errors,
-                "absolute_angle_errors": absolute_angle_errors,
                 "cosine_loss": cosine_loss,
                 "mean_abs_angle_error": mean_abs_angle_error
             })
