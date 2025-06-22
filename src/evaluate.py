@@ -65,14 +65,34 @@ def evaluate_model(config, model, test_loader):
         median_squared_error = np.median((all_predictions - all_actuals) ** 2)
         mean_absolute_error = np.mean(np.abs(all_predictions - all_actuals))
         median_absolute_error = np.median(np.abs(all_predictions - all_actuals))
+    
+        if config["model"]["use_sincos_encoding"]:
+            angle_errors = (all_predictions - all_actuals + 180) % 360 - 180 
+            absolute_angle_errors = np.abs(angle_errors)
+            cosine_loss = 1 - np.cos(np.radians(angle_errors)).mean()
+            mean_abs_angle_error = np.mean(absolute_angle_errors)
 
-        wandb.log({
-            "mean_squared_error": mean_squared_error,
-            "median_squared_error": median_squared_error,
-            "mean_absolute_error": mean_absolute_error,
-            "median_absolute_error": median_absolute_error,
-            "time_taken": time_taken
-        })
+            wandb.log({
+                "mean_squared_error": mean_squared_error,
+                "median_squared_error": median_squared_error,
+                "mean_absolute_error": mean_absolute_error,
+                "median_absolute_error": median_absolute_error,
+                "time_taken": time_taken,
+                "angle_errors": angle_errors,
+                "absolute_angle_errors": absolute_angle_errors,
+                "cosine_loss": cosine_loss,
+                "angle_error_hist": wandb.Histogram(absolute_angle_errors), #histogram of absolute angle errors
+                "mean_abs_angle_error": mean_abs_angle_error
+            })
+        else:
+            wandb.log({
+                "mean_squared_error": mean_squared_error,
+                "median_squared_error": median_squared_error,
+                "mean_absolute_error": mean_absolute_error,
+                "median_absolute_error": median_absolute_error,
+                "time_taken": time_taken
+            })
+
         return mean_squared_error #we only return the MSE here
     else: #classification
         accuracy = np.mean(all_predictions == all_actuals)
