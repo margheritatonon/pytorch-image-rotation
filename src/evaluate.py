@@ -29,23 +29,29 @@ def evaluate_model(config, model, test_loader):
             else:
                 inputs = torch.cat((original_ims, rotated_ims), dim=1)  # channel-wise
 
-            outputs = model(*inputs) #using the model
+            if isinstance(inputs, tuple):
+                outputs = model(*inputs)
+            else:
+                outputs = model(inputs) #using the model
 
             if not is_regression:
                 predictions = torch.argmax(outputs, dim=1)
+                all_predictions.append(predictions.squeeze().cpu().numpy())
+                all_actuals.append(angs.cpu().numpy())
             elif is_regression:
                 if config["model"]["use_sincos_encoding"]:
                     #we decode the sincos encoding back to angles
-                    predicted_angles = torch.atan2(predictions[:, 0], predictions[:, 1]) * (180 / np.pi)
+                    predicted_angles = torch.atan2(outputs[:, 0], outputs[:, 1]) * (180 / np.pi)
                     actual_angles = torch.atan2(angs[:, 0], angs[:, 1]) * (180 / np.pi)
                     predicted_angles = predicted_angles % 360 #normalizing the angles to be between 0 and 360
                     actual_angles = actual_angles % 360
                 else:
                     predicted_angles = outputs.squeeze()
                     actual_angles = angs.squeeze()
+                all_predictions.append(predicted_angles.cpu().numpy())
+                all_actuals.append(actual_angles.cpu().numpy())
 
-            all_predictions.append(predictions.squeeze().cpu().numpy())
-            all_actuals.append(angs.cpu().numpy())
+            
 
     all_predictions = np.concatenate(all_predictions)
     all_actuals = np.concatenate(all_actuals)

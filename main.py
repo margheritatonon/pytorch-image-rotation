@@ -34,7 +34,7 @@ def main():
 
     #starting the process:
     #loaders
-    train_loader, test_loader = get_dataloaders() #you can make this dependent on config and add more parameters to the .yaml file if needed
+    train_loader, test_loader = get_dataloaders(config) #you can make this dependent on config and add more parameters to the .yaml file if needed
     #accessing the model
     model = get_model(config)
     #training the model
