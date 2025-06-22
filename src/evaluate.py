@@ -58,7 +58,7 @@ def evaluate_model(config, model, test_loader):
 
     end_time = time.time()
     time_taken = end_time - start_time
-    #print(f"Evaluation completed in {time_taken:.2f} seconds") #not sure if i should print this but need to add in wandb
+    
 
     if is_regression:
         mean_squared_error = np.mean((all_predictions - all_actuals) ** 2) 
@@ -81,9 +81,9 @@ def evaluate_model(config, model, test_loader):
                 "angle_errors": angle_errors,
                 "absolute_angle_errors": absolute_angle_errors,
                 "cosine_loss": cosine_loss,
-                "angle_error_hist": wandb.Histogram(absolute_angle_errors), #histogram of absolute angle errors
                 "mean_abs_angle_error": mean_abs_angle_error
             })
+            return cosine_loss, mean_abs_angle_error
         else:
             wandb.log({
                 "mean_squared_error": mean_squared_error,
@@ -92,8 +92,7 @@ def evaluate_model(config, model, test_loader):
                 "median_absolute_error": median_absolute_error,
                 "time_taken": time_taken
             })
-
-        return mean_squared_error #we only return the MSE here
+            return mean_squared_error #we only return the MSE here
     else: #classification
         accuracy = np.mean(all_predictions == all_actuals)
         wandb.log({

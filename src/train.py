@@ -64,7 +64,11 @@ def train_model(model, train_loader, val_loader, config):
                 inputs = (original_imgs, rotated_imgs)  #for siamese model
             else:
                 inputs = torch.cat((original_imgs, rotated_imgs), dim=1)  #channel-wise
-            predictions = model(inputs) 
+            
+            if isinstance(inputs, tuple):
+                predictions = model(*inputs) #unpacking tuple into separate parts
+            else:
+                predictions = model(inputs)
 
             #inputs = (original_imgs, rotated_imgs)
             #if isinstance(inputs, tuple):
@@ -73,7 +77,7 @@ def train_model(model, train_loader, val_loader, config):
             #    predictions = model(inputs)
             #predictions = model(original_imgs, rotated_imgs) #using the model to get predictions based on original and rotated images
             
-            #print(f"Pred shape: {predictions.shape}, Angle shape: {angle.shape}")
+
             loss_value = loss(predictions.squeeze(), angle) #calculating the loss between prediction and actual angle
 
             if torch.isnan(loss_value).any(): #checking for NaN in loss
@@ -89,14 +93,24 @@ def train_model(model, train_loader, val_loader, config):
                 "train_loss": loss_value.item(),
                 "epoch": epoch
             })
-        validation_accuracy = evaluate_model(config, model, val_loader) #evaluating the model on the validation set - dependency on evaluate.py
-        avg_loss = total_loss / len(train_loader)
-        wandb.log({
-            "validation_accuracy": validation_accuracy,
-            "epoch": epoch,
-            "avg_loss": avg_loss.item()
-        })
-        print(f"Epoch [{epoch+1}/{num_epochs}], Average Loss (MSE): {avg_loss.item():.4f}")
+
+        if config["model"]["use_sincos_encoding"]:
+            cosine_loss, mean_abs_angle_error = evaluate_model(config, model, val_loader) #evaluating the model on the validation set - dependency on evaluate.py
+            wandb.log({
+                "validation_cosine_loss": cosine_loss,
+                "epoch": epoch,
+                "mean_abs_angle_error": mean_abs_angle_error
+            })
+            print(f"Epoch [{epoch+1}/{num_epochs}], Cosine Loss: {cosine_loss:.4f}, Mean Absolute Angle Error: {mean_abs_angle_error:.4f}")
+        else:
+            validation_accuracy = evaluate_model(config, model, val_loader) #evaluating the model on the validation set - dependency on evaluate.py
+            avg_loss = total_loss / len(train_loader)
+            wandb.log({
+                "validation_accuracy": validation_accuracy,
+                "epoch": epoch,
+                "avg_loss": avg_loss.item()
+            })
+            print(f"Epoch [{epoch+1}/{num_epochs}], Average Loss (MSE): {avg_loss.item():.4f}")
 
     return model #returning the trained model
 
