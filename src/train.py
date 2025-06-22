@@ -1,6 +1,7 @@
 import wandb
 import torch
 from src.evaluate import evaluate_model
+from src.utils import AngularLoss
 
 
 
@@ -33,6 +34,8 @@ def train_model(model, train_loader, val_loader, config):
         loss = torch.nn.MSELoss()
     elif lossconfig == "l1":
         loss = torch.nn.L1Loss()
+    elif lossconfig == "angular":
+        loss = AngularLoss()
     #add more loss functions here if needed
 
     #optimizer:
@@ -58,10 +61,10 @@ def train_model(model, train_loader, val_loader, config):
 
             model_type = config["model"]["type"]
             if model_type == "siamese":
-                inputs = (original_imgs, rotated_imgs)  # for Siamese model
+                inputs = (original_imgs, rotated_imgs)  #for siamese model
             else:
-                inputs = torch.cat((original_imgs, rotated_imgs), dim=1)  # channel-wise
-            predictions = model(inputs) #unpacking with *
+                inputs = torch.cat((original_imgs, rotated_imgs), dim=1)  #channel-wise
+            predictions = model(inputs) 
 
             #inputs = (original_imgs, rotated_imgs)
             #if isinstance(inputs, tuple):
@@ -93,7 +96,7 @@ def train_model(model, train_loader, val_loader, config):
             "epoch": epoch,
             "avg_loss": avg_loss.item()
         })
-        print(f"Epoch [{epoch+1}/{num_epochs}], Loss: {avg_loss.item():.4f}")
+        print(f"Epoch [{epoch+1}/{num_epochs}], Average Loss (MSE): {avg_loss.item():.4f}")
 
     return model #returning the trained model
 
