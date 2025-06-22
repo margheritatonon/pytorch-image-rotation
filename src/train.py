@@ -94,7 +94,7 @@ def train_model(model, train_loader, val_loader, config):
                 "epoch": epoch
             })
 
-        if config["loss"]["angular_loss"]: #if we are using angular loss, we evaluate the model on the validation set
+        if config["training"]["loss"] == "angular": #if we are using angular loss, we evaluate the model on the validation set
             cosine_loss, mean_abs_angle_error = evaluate_model(config, model, val_loader) #evaluating the model on the validation set - dependency on evaluate.py
             wandb.log({
                 "validation_cosine_loss": cosine_loss,
