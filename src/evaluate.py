@@ -66,7 +66,7 @@ def evaluate_model(config, model, test_loader):
         mean_absolute_error = np.mean(np.abs(all_predictions - all_actuals))
         median_absolute_error = np.median(np.abs(all_predictions - all_actuals))
     
-        if config["model"]["use_sincos_encoding"]:
+        if config["loss"]["angular_loss"]:
             angle_errors = (all_predictions - all_actuals + 180) % 360 - 180 
             absolute_angle_errors = np.abs(angle_errors)
             cosine_loss = 1 - np.cos(np.radians(angle_errors)).mean()
