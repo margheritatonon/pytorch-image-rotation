@@ -14,6 +14,7 @@ model:
     - linear: [128, 2] #we predict 2 values - sine and cosine of the angle
   task: "regression"
   use_sincos_encoding: true #this is going to tell the model to use sine and cosine encoding for the angle
+  dataset: "translation" #specifies the dataset to be used
 
 training:
   num_epochs: 10
