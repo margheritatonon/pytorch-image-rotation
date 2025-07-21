@@ -7,7 +7,9 @@ Dataset help:
 
 
 ### Weights and Biases: 
+
 Translation only:
 - https://wandb.ai/mtonon-/baseline_linear_relu_regression?nw=nwusermtonon 
+
 Translation and rotation:
-- 
+- https://wandb.ai/mtonon-/translation_and_rotation?nw=nwusermtonon
