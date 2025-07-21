@@ -1,0 +1,23 @@
+experiment_name: "baseline_mlp"
+project_name : "translation_and_rotation"
+
+model:
+  name: "baseline_model"
+  type: "custom"
+  layers:
+    - flatten: true
+    - linear: [1568, 256]
+    - activation: "relu"
+    - linear: [256, 128]
+    - activation: "relu"
+    - linear: [128, 1] #we predict a single value because we have a regression task
+  task: "regression"
+  use_sincos_encoding: false
+
+
+training:
+  num_epochs: 10
+  batch_size: 64
+  learning_rate: 0.001
+  loss: "mse"
+  optimizer: "adam"

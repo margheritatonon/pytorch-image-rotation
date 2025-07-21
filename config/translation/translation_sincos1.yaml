@@ -1,0 +1,23 @@
+
+experiment_name: "sincos1"
+project_name : "translation_and_rotation"
+
+model:
+  name: "sincos1"
+  type: "custom" 
+  layers:
+    - flatten: true #not sure i need this
+    - linear: [1568, 256]
+    - activation: "tanh"
+    - linear: [256, 128]
+    - activation: "tanh"
+    - linear: [128, 2] #we predict 2 values - sine and cosine of the angle
+  task: "regression"
+  use_sincos_encoding: true #this is going to tell the model to use sine and cosine encoding for the angle
+
+training:
+  num_epochs: 10
+  batch_size: 64
+  learning_rate: 0.001
+  loss: "mse" #we still use mse as the loss function
+  optimizer: "adam"
