@@ -28,7 +28,14 @@ class LoadedRotatedData(Dataset):
     
 def get_dataloaders(config):
     use_sincos = config["model"].get("use_sincos_encoding", False) #here we access whether we use sincos encoding or not
-    loaded_dataset = LoadedRotatedData(use_sincosencoding=use_sincos)
+
+    #making sure we use the right dataset:
+    if config["model"]["dataset"] == "rotated":
+        path = "dataset/copy_rotated_translated_dataset.pt"
+    else:
+        path = "dataset/copy_rotated_dataset.pt"
+        
+    loaded_dataset = LoadedRotatedData(use_sincosencoding=use_sincos, path=path)
     train_size = int(0.8 * len(loaded_dataset))
     test_size = len(loaded_dataset) - train_size
     train_dataset, test_dataset = random_split(loaded_dataset, [train_size, test_size])
