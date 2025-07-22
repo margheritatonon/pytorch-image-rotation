@@ -7,24 +7,24 @@ import numpy as np
 import torch
 import matplotlib.pyplot as plt
 
-# Load your tensors
+#loading
 original_images, rotated_images, angles = torch.load("dataset/copy_rotated_translated_dataset_cifar10.pt")
 
-# Create plot
+#plotting
 fig, axes = plt.subplots(2, 10, figsize=(15, 3))
 axes = axes.flatten()
 
 for i in range(10):
-    # Convert from CHW (3, H, W) to HWC (H, W, 3)
+    #CHW (3, H, W) to HWC (H, W, 3)
     squeezed_original = original_images[i].permute(1, 2, 0).cpu().numpy()
     squeezed_rotated = rotated_images[i].permute(1, 2, 0).cpu().numpy()
 
-    # Plot original
+    #padded images plotting
     axes[i].imshow(squeezed_original)
     axes[i].set_title(f"Original {i+1}")
     axes[i].axis('off')
 
-    # Plot rotated
+    #rotated images plotting - we don't have information about the translation because in the end we still want to predict just the angle
     axes[i + 10].imshow(squeezed_rotated)
     axes[i + 10].set_title(f"Angle {angles[i].item():.0f}°")
     axes[i + 10].axis('off')
