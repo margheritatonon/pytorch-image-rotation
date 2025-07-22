@@ -151,10 +151,16 @@ def build_transformer_model(config):
 
 # RESNET
 class ResNet(nn.Module):
-    def __init__(self, unit_norm = True):
+    def __init__(self, resnet_type = 18, unit_norm = True):
         super().__init__()
         self.unit_norm = unit_norm
-        self.backbone = models.resnet18(pretrained=True)
+
+        if resnet_type == 34:
+            self.backbone = models.resnet34(pretrained = True)
+        elif resnet_type == 50:
+            self.backbone = models.resnet50(pretrained = True)
+        else:
+            self.backbone = models.resnet18(pretrained=True)
 
         #modifying the first layer to accept 6 channels bc of the images we have
         self.backbone.conv1 = nn.Conv2d(6, 64, kernel_size=7, stride=2, padding=3, bias=False)
@@ -173,7 +179,7 @@ def build_resnet_model(config):
     Function to get the ResNet model for image rotation prediction.
     Used in main.py
     """
-    return ResNet(unit_norm=config["model"].get("unit_norm", True))  # whether to normalize the output
+    return ResNet(resnet_type= config["model"].get("resnet_type", 18), unit_norm=config["model"].get("unit_norm", True))  # whether to normalize the output
 
 def get_model(config):
     if config["model"]["type"] == "custom":
