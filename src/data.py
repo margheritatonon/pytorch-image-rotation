@@ -32,7 +32,7 @@ def get_dataloaders(config):
     #making sure we use the right dataset:
     if config["model"]["dataset"] == "translated_mnist":
         path = "dataset/copy_rotated_translated_dataset.pt"
-    elif config["model"]["dataset"] == "translated_cifar10":
+    elif config["model"]["dataset"] == "translated_cifar":
         path = "dataset/copy_rotated_translated_dataset_cifar10.pt"
     else: #the default dataset is just the rotated MNIST.
         path = "dataset/copy_rotated_dataset.pt"
