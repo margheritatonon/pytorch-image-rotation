@@ -30,11 +30,13 @@ def get_dataloaders(config):
     use_sincos = config["model"].get("use_sincos_encoding", False) #here we access whether we use sincos encoding or not
 
     #making sure we use the right dataset:
-    if config["model"]["dataset"] == "rotated":
+    if config["model"]["dataset"] == "translated_mnist":
         path = "dataset/copy_rotated_translated_dataset.pt"
-    else:
+    elif config["model"]["dataset"] == "translated_cifar10":
+        path = "dataset/copy_rotated_translated_dataset_cifar10.pt"
+    else: #the default dataset is just the rotated MNIST.
         path = "dataset/copy_rotated_dataset.pt"
-        
+
     loaded_dataset = LoadedRotatedData(use_sincosencoding=use_sincos, path=path)
     train_size = int(0.8 * len(loaded_dataset))
     test_size = len(loaded_dataset) - train_size
