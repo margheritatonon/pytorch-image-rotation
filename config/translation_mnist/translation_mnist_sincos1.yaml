@@ -1,0 +1,24 @@
+
+experiment_name: "sincos1"
+project_name : "translation_and_rotation_mnist"
+
+model:
+  name: "sincos1_angular"
+  type: "custom" 
+  layers:
+    - flatten: true #not sure i need this
+    - linear: [1568, 256]
+    - activation: "tanh"
+    - linear: [256, 128]
+    - activation: "tanh"
+    - linear: [128, 2] #we predict 2 values - sine and cosine of the angle
+  task: "regression"
+  use_sincos_encoding: true #this is going to tell the model to use sine and cosine encoding for the angle
+  dataset: "translated_mnist" #specifies the dataset to be used
+
+training:
+  num_epochs: 10
+  batch_size: 64
+  learning_rate: 0.001
+  loss: "angular" #using the angular loss function to take into account the circular nature of the data
+  optimizer: "adam"
