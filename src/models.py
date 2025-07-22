@@ -1,6 +1,7 @@
 import torch.nn as nn
 import torch
 import torch.nn.functional as F
+from torchvision import models #for resnet
 
 #class RotationModel(nn.Module):
 #    def __init__(self, )
@@ -148,6 +149,32 @@ def build_transformer_model(config):
     )
 
 
+# RESNET
+class ResNet(nn.Module):
+    def __init__(self, unit_norm = True):
+        super().__init__()
+        self.unit_norm = unit_norm
+        self.backbone = models.resnet18(pretrained=True)
+
+        #modifying the first layer to accept 6 channels bc of the images we have
+        self.backbone.conv1 = nn.Conv2d(6, 64, kernel_size=7, stride=2, padding=3, bias=False)
+
+        #modifying the last layer to output 2 values (sin, cos)
+        self.backbone.fc = nn.Linear(self.backbone.fc.in_features, 2)
+    
+    def forward(self, x):
+        rot = self.backbone(x)
+        if self.unit_norm:
+            rot = F.normalize(rot, dim=-1)
+        return rot
+
+def build_resnet_model(config):
+    """
+    Function to get the ResNet model for image rotation prediction.
+    Used in main.py
+    """
+    return ResNet(unit_norm=config["model"].get("unit_norm", True))  # whether to normalize the output
+
 def get_model(config):
     if config["model"]["type"] == "custom":
         return build_custom_model(config)
@@ -155,4 +182,6 @@ def get_model(config):
         return build_siamese_model(config)
     elif config["model"]["type"] == "transformer":
         return build_transformer_model(config)
+    elif config["model"]["type"] == "resnet":
+        return build_resnet_model(config)
     #can add more models here later - create functions that build the models based on different types/architectures
