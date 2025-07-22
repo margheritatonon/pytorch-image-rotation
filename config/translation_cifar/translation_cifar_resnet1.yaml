@@ -1,0 +1,24 @@
+experiment_name: "resnet1"
+project_name : "translation_and_rotation_cifar"
+
+model:
+  name: "resnet1
+  type: "resnet"
+  #stuff specific to resnet
+  input_shape:
+  block_type: "basic" #using basic block for resnet
+  num_blocks: [2, 2, 2, 2] #number of blocks in each layer
+  num_classes: 2 #we predict 2 values - sine and cosine of the angle - we have 2 output categories
+  channels: [64, 128, 256, 512] #number of channels in each layer
+  dropout: 0.1 
+  #general stuff
+  task: "regression"
+  use_sincos_encoding: true
+  dataset: "translated_cifar" 
+
+training:
+  num_epochs: 10 
+  batch_size: 128 
+  learning_rate: 0.001
+  loss: "angular" #using the angular loss function to take into account the circular nature of the data
+  optimizer: "adam"
