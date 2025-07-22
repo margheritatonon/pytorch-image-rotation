@@ -5,7 +5,7 @@ model:
   name: "transformer1-angular-sincos"
   type: "transformer"
   #stuff specific to transformer model
-  image_size: [32, 32, 3] 
+  image_size: 48
   patch_size: 4
   in_chans: 6 #num of transformer layers
   embedding_dimension: 128
@@ -22,7 +22,7 @@ model:
 
 training:
   num_epochs: 10
-  batch_size: 64
+  batch_size: 128
   learning_rate: 0.001
   loss: "angular" #using the angular loss function to take into account the circular nature of the data
   optimizer: "adam"
