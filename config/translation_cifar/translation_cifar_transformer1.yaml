@@ -6,10 +6,10 @@ model:
   type: "transformer"
   #stuff specific to transformer model
   image_size: 48
-  patch_size: 4
+  patch_size: 8
   in_chans: 6 #num of transformer layers
-  embedding_dimension: 128
-  depth: 4
+  embedding_dimension: 64
+  depth: 3
   number_heads: 8
   mlp_ratio: 4.0
   dropout: 0.1
