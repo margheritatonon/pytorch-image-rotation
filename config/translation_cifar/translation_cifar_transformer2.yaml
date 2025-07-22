@@ -1,0 +1,28 @@
+experiment_name: "transformer-batch64"
+project_name : "translation_and_rotation_cifar"
+
+model:
+  name: "transformer1-angular-sincos"
+  type: "transformer"
+  #stuff specific to transformer model
+  image_size: 48
+  patch_size: 8
+  in_chans: 6 #num of transformer layers
+  embedding_dimension: 64
+  depth: 3
+  number_heads: 8
+  mlp_ratio: 4.0
+  dropout: 0.1
+  activation: "relu" #activation function for the transformer
+  unit_norm: True #whether to use unit norm in the transformer layers
+  #general stuff
+  task: "regression"
+  use_sincos_encoding: true
+  dataset: "translated_cifar" 
+
+training:
+  num_epochs: 10
+  batch_size: 64 #to see the time it takes to train with a smaller batch size
+  learning_rate: 0.001
+  loss: "angular" #using the angular loss function to take into account the circular nature of the data
+  optimizer: "adam"
