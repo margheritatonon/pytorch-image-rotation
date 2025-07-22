@@ -18,5 +18,5 @@ Translation and rotation (MNIST):
 - https://wandb.ai/mtonon-/translation_and_rotation_mnist?nw=nwusermtonon
 
 Translation and rotation (CIFAR10):
-- 
+- https://wandb.ai/mtonon-/translation_and_rotation_cifar?nw=nwusermtonon
 
