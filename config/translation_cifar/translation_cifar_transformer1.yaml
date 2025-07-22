@@ -1,0 +1,26 @@
+experiment_name: "sincos1"
+project_name : "translation_and_rotation_cifar"
+
+model:
+  name: "transformer1-angular-sincos"
+  type: "transformer"
+  #stuff specific to transformer model
+  image_size: [32, 32, 3] 
+  patch_size: 4
+  in_chans: 6 #num of transformer layers
+  embedding_dimension: 128
+  depth: 4
+  number_heads: 8
+  mlp_ratio: 4.0
+  dropout_rate: 0.1
+  #general stuff
+  task: "regression"
+  use_sincos_encoding: true
+  dataset: "translated_cifar" 
+
+training:
+  num_epochs: 10
+  batch_size: 64
+  learning_rate: 0.001
+  loss: "angular" #using the angular loss function to take into account the circular nature of the data
+  optimizer: "adam"
