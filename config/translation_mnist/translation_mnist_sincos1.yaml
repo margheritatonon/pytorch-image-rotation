@@ -7,7 +7,7 @@ model:
   type: "custom" 
   layers:
     - flatten: true #not sure i need this
-    - linear: [1568, 256]
+    - linear: [3872, 256]
     - activation: "tanh"
     - linear: [256, 128]
     - activation: "tanh"
@@ -22,3 +22,5 @@ training:
   learning_rate: 0.001
   loss: "angular" #using the angular loss function to take into account the circular nature of the data
   optimizer: "adam"
+
+# python main.py --config config/translation_mnist/translation_mnist_sincos1.yaml 
