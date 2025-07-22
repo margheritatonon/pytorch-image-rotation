@@ -2,7 +2,7 @@ experiment_name: "sincos1"
 project_name : "translation_and_rotation_cifar"
 
 model:
-  name: "sincos1_angular"
+  name: "sincos1-angular-custom"
   type: "custom" 
   layers:
     - flatten: true #not sure i need this
