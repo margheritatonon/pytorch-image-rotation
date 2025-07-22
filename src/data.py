@@ -41,6 +41,7 @@ def get_dataloaders(config):
     train_size = int(0.8 * len(loaded_dataset))
     test_size = len(loaded_dataset) - train_size
     train_dataset, test_dataset = random_split(loaded_dataset, [train_size, test_size])
-    train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
-    test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
+    batch_size = config["training"]["batch_size"]
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
     return train_loader, test_loader
