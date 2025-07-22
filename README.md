@@ -1,9 +1,9 @@
 # PyTorch Image Rotation
 
 Dataset help:
-- All datasets contain the original image, the modified image, the angle of rotation, and if applicable the units of translation.
+- All datasets contain the original image, the modified image, and the angle of rotation.
     - `copy_rotated_dataset.pt` is the MNIST digit dataset, with only rotation applied.
-    - `copy_rotated_translated_dataset.pt` is the MNIST digit dataset, with rotation and translation applied.
+    - `copy_rotated_translated_dataset_mnist.pt` is the MNIST digit dataset, with rotation and translation applied.
     - `copy_rotated_translated_dataset_cifar10.pt` is the CIFAR10 dataset with real images, with rotation and translation applied.
 
 When creating a YAML file, if no dataset is specified, the default is the MNIST digit dataset with only rotation applied.
