@@ -8,8 +8,10 @@ import torch
 import matplotlib.pyplot as plt
 
 #loading
-#original_images, rotated_images, angles = torch.load("dataset/copy_rotated_translated_dataset_cifar10.pt")
-original_images, rotated_images, angles = torch.load("dataset/copy_rotated_translated_dataset.pt")
+dataset_path = "dataset/copy_rotated_translated_dataset.pt" 
+# dataset/copy_rotated_translated_dataset_cifar10.pt
+# dataset/copy_rotated_translated_dataset.pt
+original_images, rotated_images, angles = torch.load(dataset_path)
 
 #plotting
 fig, axes = plt.subplots(2, 10, figsize=(15, 3))
