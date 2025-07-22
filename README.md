@@ -11,8 +11,12 @@ When creating a YAML file, if no dataset is specified, the default is the MNIST 
 
 ### Weights and Biases: 
 
-Translation only:
+Translation only (MNIST):
 - https://wandb.ai/mtonon-/baseline_linear_relu_regression?nw=nwusermtonon 
 
-Translation and rotation:
-- https://wandb.ai/mtonon-/translation_and_rotation?nw=nwusermtonon
+Translation and rotation (MNIST):
+- https://wandb.ai/mtonon-/translation_and_rotation_mnist?nw=nwusermtonon
+
+Translation and rotation (CIFAR10):
+- 
+
