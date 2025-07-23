@@ -8,7 +8,7 @@ import torch
 import matplotlib.pyplot as plt
 
 #loading
-dataset_path = "dataset/copy_rotated_translated_dataset.pt" 
+dataset_path = "dataset/copy_rotated_translated_dataset_cifar10.pt" 
 # dataset/copy_rotated_translated_dataset_cifar10.pt
 # dataset/copy_rotated_translated_dataset.pt
 original_images, rotated_images, angles = torch.load(dataset_path)
