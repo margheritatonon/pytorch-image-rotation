@@ -114,11 +114,12 @@ def train_model(model, train_loader, val_loader, config):
             })
             print(f"Epoch [{epoch+1}/{num_epochs}], Average Loss (MSE): {avg_loss.item():.4f}")
     
-    os.makedirs("checkpoints", exist_ok=True)  #ensure directory exists
-    model_name = config["model"]["name"]
-    save_path = f"checkpoints/{model_name}.pth"
-    torch.save(model.state_dict(), save_path)
-    print(f"✅ Model saved to {save_path}")
+    if config["training"].get("save", False):
+        os.makedirs("checkpoints", exist_ok=True)  #ensure directory exists
+        model_name = config["model"]["name"]
+        save_path = f"checkpoints/{model_name}.pth"
+        torch.save(model.state_dict(), save_path)
+        print(f"✅ Model saved to {save_path}")
 
     return model #returning the trained model
 
